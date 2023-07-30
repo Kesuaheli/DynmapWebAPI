@@ -1,0 +1,4 @@
+# configurations for the webserver
+web:
+  # the port to listen to
+  port: 8124
