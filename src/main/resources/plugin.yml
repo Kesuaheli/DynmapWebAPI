@@ -1,0 +1,10 @@
+name: DynmapWebAPI
+version: '${project.version}'
+main: de.kesuaheli.dynmapwebapi.DynmapWebAPI
+api-version: '1.20'
+authors: [Kesuaheli]
+description: DynmapWebAPI exposes some http endpoints to change some dynmap settings
+website: https://kesuaheli.de
+
+depend:
+  - dynmap
