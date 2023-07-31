@@ -1,5 +1,6 @@
 package de.kesuaheli.dynmapwebapi;
 
+import de.kesuaheli.dynmapwebapi.webserver.Auth;
 import de.kesuaheli.dynmapwebapi.webserver.Webserver;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapCommonAPIListener;
@@ -22,6 +23,7 @@ public final class DynmapWebAPI extends JavaPlugin {
         DynmapCommonAPIListener.register(dMapApi);
         this.LOG.info("Hooked into Dynmap");
 
+        Auth.reloadUsers(this);
         this.web = new Webserver(this);
     }
 

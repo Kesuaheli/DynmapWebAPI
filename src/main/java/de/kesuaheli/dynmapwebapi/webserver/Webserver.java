@@ -30,21 +30,24 @@ public class Webserver {
         Handler handler = new Handler(plugin);
 
         this.plugin.LOG.info("Starting Javalin webserver...");
-        this.server = Javalin.create(c -> c.showJavalinBanner = false)
-                .get("/markers", handler::getMarkersDefaultSet)
-                .get("/markers/{set}", handler::getMarkers)
-                .get("/marker/{marker}", handler::getMarkerDefaultSet)
-                .get("/marker/{set}/{marker}", handler::getMarker)
-                .get("/markersets", handler::getMarkerSets)
-                .get("/markerset/{set}", handler::getMarkerSet)
+        this.server = Javalin.create(c -> {
+            c.showJavalinBanner = false;
+            c.accessManager(Auth::accessManager);
+        })
+                .get("/markers", handler::getMarkersDefaultSet, Role.PUBLIC)
+                .get("/markers/{set}", handler::getMarkers, Role.PUBLIC)
+                .get("/marker/{marker}", handler::getMarkerDefaultSet, Role.READ)
+                .get("/marker/{set}/{marker}", handler::getMarker,Role.READ)
+                .get("/markersets", handler::getMarkerSets, Role.PUBLIC)
+                .get("/markerset/{set}", handler::getMarkerSet, Role.READ)
 
-                .post("/marker", handler::postMarkerDefaultSet)
-                .post("/marker/{set}", handler::postMarker)
-                .post("/markerset", handler::postMarkerSet)
+                .post("/marker", handler::postMarkerDefaultSet, Role.WRITE)
+                .post("/marker/{set}", handler::postMarker, Role.WRITE)
+                .post("/markerset", handler::postMarkerSet, Role.WRITE)
 
-                .delete("/marker/{marker}", handler::deleteMarkerDefaultSet)
-                .delete("/marker/{set}/{marker}", handler::deleteMarker)
-                .delete("/markerset/{set}/", handler::deleteMarkerSet)
+                .delete("/marker/{marker}", handler::deleteMarkerDefaultSet, Role.WRITE)
+                .delete("/marker/{set}/{marker}", handler::deleteMarker, Role.WRITE)
+                .delete("/markerset/{set}/", handler::deleteMarkerSet, Role.WRITE)
 
                 .start(port);
 

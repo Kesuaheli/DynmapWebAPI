@@ -2,3 +2,19 @@
 web:
   # the port to listen to
   port: 8124
+
+# all users allowed to connect to the api and use secured endpoints.
+# 'roles' are the permissions. Currently, there are the roles
+# - PUBLIC (unsecured): list all stuff without further details
+# - READ:               list stuff details
+# - WRITE:              change stuff
+users:
+  kesuaheli:
+    password: "PleaseChange123"
+    roles:
+      - "read"
+      - "write"
+  anotherUser123:
+    password: "another-password-123"
+    roles:
+      - "read"
