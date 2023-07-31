@@ -1,7 +1,11 @@
 package de.kesuaheli.dynmapwebapi;
 
+import org.dynmap.markers.MarkerIcon;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("unused")
 public class MarkerSet {
@@ -44,9 +48,11 @@ public class MarkerSet {
     }
 
     public List<String> getAllowedMarkerIcons() {
-        List<String> icons = new ArrayList<>();
-        this.markerSet.getAllowedMarkerIcons().forEach(i -> icons.add(i.getMarkerIconID()));
-        return icons;
+        Set<MarkerIcon> iconSet = this.markerSet.getAllowedMarkerIcons();
+        if (iconSet == null) {
+            iconSet = new HashSet<>();
+        }
+        return iconSet.stream().map(MarkerIcon::getMarkerIconID).toList();
     }
 
     public int getLayerPriority() {
