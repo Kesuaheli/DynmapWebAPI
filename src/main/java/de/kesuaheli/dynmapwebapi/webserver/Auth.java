@@ -14,14 +14,15 @@ import java.util.*;
 public class Auth {
 
     public record Pair(String user, String password) {}
+    @SuppressWarnings("FieldMayBeFinal")
     private static HashMap<Pair, List<Role>> userRoles = new HashMap<>();
 
 
-    public static void reloadUsers(@NotNull DynmapWebAPI plugin) {
+    public static boolean reloadUsers(@NotNull DynmapWebAPI plugin) {
         ConfigurationSection users = plugin.getConfig().getConfigurationSection("users");
         if (users == null) {
             plugin.LOG.severe("Could not read \"users\" from config. Please check your config!");
-            return;
+            return false;
         }
 
         userRoles.clear();
@@ -31,6 +32,7 @@ public class Auth {
         ));
 
         plugin.LOG.info("Updated user. There is/are " + userRoles.size() + " user(s) now: " + userRoles.keySet().stream().map(u -> u.user).toList());
+        return true;
     }
 
     public static void accessManager(@NotNull Handler handler, @NotNull Context ctx, @NotNull Set<? extends RouteRole> permittedRoles) throws Exception {

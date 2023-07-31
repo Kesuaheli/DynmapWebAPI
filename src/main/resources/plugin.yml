@@ -8,3 +8,17 @@ website: https://kesuaheli.de
 
 depend:
   - dynmap
+
+commands:
+  dynmapwebapi:
+    description: Admin controls for the DynmapWebAPI
+    permission: de.kesuaheli.dynmapwebapi.command.admin
+    usage: /<command> <reload|restart> [params]
+    aliases:
+      - dynmapapi
+      - dmapapi
+
+permissions:
+  de.kesuaheli.dynmapwebapi.command.admin:
+    description: Allows usage of the /dynmapwebapi command to do admin stuff
+    default: op
