@@ -27,8 +27,8 @@ public class Auth {
 
         userRoles.clear();
         users.getKeys(false).forEach(name -> userRoles.put(
-            new Pair(name, users.getString("password", "PleaseChange")),
-            Role.fromString(users.getStringList("roles"))
+            new Pair(name, users.getString(name+".password", "PleaseChange")),
+            Role.fromString(users.getStringList(name+".roles"))
         ));
 
         plugin.LOG.info("Updated user. There is/are " + userRoles.size() + " user(s) now: " + userRoles.keySet().stream().map(u -> u.user).toList());
